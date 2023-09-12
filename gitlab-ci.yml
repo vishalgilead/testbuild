@@ -1,0 +1,30 @@
+stages:
+  - build
+  - test
+
+variables:
+  # Define any environment variables you need here
+  # For example:
+  PYTHON_VERSION: "3.10"
+
+before_script:
+  # Set up Python
+  - apt-get update -qy
+  - apt install -y python3.11-venv
+  - python3 -m venv venv
+  - source venv/bin/activate
+  - pip install --upgrade pip
+
+build:
+  stage: build
+  script:
+    # Install project dependencies if you have a requirements.txt file
+    - if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+test:
+  stage: test
+  script:
+    # Run unit tests here
+    - python ./main.py  # Modify this command to run your tests
+
+# You can add more stages and jobs as needed for deployment, etc.
